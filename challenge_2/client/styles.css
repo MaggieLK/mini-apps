@@ -1,0 +1,10 @@
+textarea {
+  resize: none;
+  height: 75vh;
+  width: 45vw
+}
+
+#grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
