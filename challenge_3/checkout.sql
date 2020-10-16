@@ -12,7 +12,7 @@ CREATE TABLE purchases (
   address1 VARCHAR(20),
   address2 VARCHAR(20),
   city VARCHAR(20),
-  state VARCHAR(2),
+  state VARCHAR(20),
   zip VARCHAR(20),
   phone VARCHAR(20),
   card VARCHAR(20),

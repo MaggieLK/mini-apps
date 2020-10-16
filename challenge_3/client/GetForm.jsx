@@ -16,15 +16,15 @@ function GetForm(props) {
       )
   } else if (props.form === 'F2') {
     return (
-      <F2 clicker = {props.clicker}/>
+      <F2 clicker = {props.clicker} handleChange = {props.handleChange}/>
       )
   } else if  (props.form === 'F3') {
     return (
-      <F3 clicker = {props.clicker}/>
+      <F3 clicker = {props.clicker} handleChange = {props.handleChange}/>
       )
   } else if  (props.form === 'confirmation') {
     return (
-      <Confirmation clicker = {props.clicker}/>
+      <Confirmation clicker = {props.clicker} confirmation={props.confirmation}/>
       )
   }
 }

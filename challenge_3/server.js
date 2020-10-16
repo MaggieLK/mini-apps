@@ -8,7 +8,6 @@ app.use('/', express.static('public'))
 app.use(bodyParser.json()) // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true }));
 
-
 var connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
@@ -16,32 +15,44 @@ var connection = mysql.createConnection({
   database: 'checkout'
 });
 
-
 app.post('/', (req, res) => {
-  console.log('hit post')
-  console.log(req.body)
+  let query = Object.keys(req.body)[0]
   connection.connect(err => {
     if (err) throw err;
-    console.log('connected')
   })
-  connection.query('DESCRIBE purchases', function (err, rows, fields) {
+  connection.query(query, function (err, rows, fields) {
     if (err) throw err;
+    res.cookie('checkout_id', rows.insertId);
+    res.end(`${rows.insertId}`);
 
-    console.log('tabledata ')
-    connection.end()
-    res.end()
   })
-
-
-
-
 })
 
+app.post('/F1', (req, res) => {
+  let query = Object.keys(req.body)[0] +'=' + Object.values(req.body)[0]
+  connection.query(query, function (err, rows) {
+    if (err) throw err;
+    res.end();
+  })
+})
 
+app.post('/F2', (req, res) => {
+  let query = Object.keys(req.body)[0] +'=' + Object.values(req.body)[0]
+  connection.query(query, function (err, rows) {
+    if (err) throw err;
+    res.end();
+  })
+})
 
-
+app.post('/F3', (req, res) => {
+  let query = Object.keys(req.body)[0] +'=' + Object.values(req.body)[0]
+  connection.query(query, function (err, rows) {
+    if (err) throw err;
+    connection.end()
+    res.end();
+  })
+})
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
-
