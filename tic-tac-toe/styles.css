@@ -13,6 +13,7 @@
   font-size: 100%;
   margin-left: 2vw;
   margin-right: 2vw;
+  animation: rotator 3s;
 }
 
 
@@ -110,3 +111,12 @@
   grid-row: 3;
 }
 
+
+
+
+@keyframes rotator {
+100% {
+  transform: rotate(0, 0);
+}
+
+}

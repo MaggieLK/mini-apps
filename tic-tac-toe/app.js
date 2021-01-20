@@ -38,6 +38,7 @@ piece.addEventListener('click', event => {
       gameState.oPieces.push(event.target.id)
       gameState.newPiece = 'X'
     }
+    spinner();
   }
   for (var i = 0; i < winCombos.length; i++){
     if (winCombos[i].every((piece) => gameState.xPieces.indexOf(piece) > -1)) {
@@ -55,10 +56,17 @@ piece.addEventListener('click', event => {
       newGame();
     }
   }
-  gameState.rotate += 90;
-  piece.style.transform = `rotate(${gameState.rotate}deg)`
 });
 
+let spinner = () => {
+  piece.animate([
+    { transform: `rotate(${gameState.rotate}deg)` },
+    { transform: `rotate(${gameState.rotate + 90}deg)` }
+  ], {
+    duration: 800,
+  });
+  gameState.rotate += 90;
+  piece.style.transform = `rotate(${gameState.rotate}deg)`;
+}
+
 button.addEventListener('click', newGame);
-
-
