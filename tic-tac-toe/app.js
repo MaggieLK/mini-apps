@@ -5,6 +5,7 @@ const xPlayer = document.getElementById('xPlayer')
 const oWinCount = document.getElementById('oWins')
 const xWinCount = document.getElementById('xWins')
 const button = document.querySelector('button');
+const winBox = document.getElementById('winBox')
 
 var gameState = {};
 gameState.xPieces = [];
@@ -26,6 +27,7 @@ const newGame = () => {
   }
   gameState.xPieces = [];
   gameState.oPieces = [];
+  winBox.innerHTML = ``;
 }
 
 piece.addEventListener('click', event => {
@@ -44,17 +46,18 @@ piece.addEventListener('click', event => {
     if (winCombos[i].every((piece) => gameState.xPieces.indexOf(piece) > -1)) {
       gameState.newPiece = 'O';
       gameState.xWins += 1;
-      window.alert(`${gameState.xPlayer} wins!`);
+      winBox.innerHTML = `X: ${gameState.xPlayer} wins!`;
       xWinCount.innerHTML = gameState.xWins;
-      newGame();
     }
     if (winCombos[i].every(piece => gameState.oPieces.indexOf(piece) > -1)) {
       gameState.newPiece = 'X'
       gameState.oWins += 1;
-      window.alert(`${gameState.oPlayer} wins!`);
+      winBox.innerHTML = `O: ${gameState.oPlayer} wins!`;
       oWinCount.innerHTML = gameState.oWins;
-      newGame();
     }
+  }
+  if (gameState.rotate >= 810) {
+    winBox.innerHTML = `It's a tie!`;
   }
 });
 
