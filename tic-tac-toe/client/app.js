@@ -15,12 +15,8 @@ gameState.newPiece = 'X'
 gameState.oWins = 0;
 gameState.xWins = 0;
 gameState.rotate = 0;
-// gameState.xPlayer = window.prompt("Who is player X?")
-// gameState.oPlayer = window.prompt("Who is player O?")
 
 var winCombos = [['one', 'two', 'three'], ['four', 'five', 'six'], ['seven', 'eight', 'nine'], ['one', 'four', 'seven'], ['two', 'five', 'eight'], ['three', 'six', 'nine'], ['one', 'five', 'nine'], ['three', 'five', 'seven']];
-// xPlayer.innerHTML = ` X: ${gameState.xPlayer} `
-// oPlayer.innerHTML = ` O: ${gameState.oPlayer} `
 
 const newGame = () => {
   for (var i = 0; i < allPieces.length; i++) {
@@ -32,7 +28,7 @@ const newGame = () => {
 }
 
 piece.addEventListener('click', event => {
-  if(event.target.innerHTML === ''){
+  if(event.target.innerHTML === '' && winBox.innerHTML === ''){
     event.target.innerHTML = gameState.newPiece
     if(gameState.newPiece === 'X') {
       gameState.xPieces.push(event.target.id)
@@ -41,20 +37,20 @@ piece.addEventListener('click', event => {
       gameState.oPieces.push(event.target.id)
       gameState.newPiece = 'X'
     }
-    if (rotator.checked) spinner()
-  }
-  for (var i = 0; i < winCombos.length; i++){
-    if (winCombos[i].every((piece) => gameState.xPieces.indexOf(piece) > -1)) {
-      gameState.newPiece = 'O';
-      gameState.xWins += 1;
-      winBox.innerHTML = `X wins!`;
-      xWinCount.innerHTML = gameState.xWins;
-    }
-    if (winCombos[i].every(piece => gameState.oPieces.indexOf(piece) > -1)) {
-      gameState.newPiece = 'X'
-      gameState.oWins += 1;
-      winBox.innerHTML = `O wins!`;
-      oWinCount.innerHTML = gameState.oWins;
+    if (rotator.checked) spinner();
+    for (var i = 0; i < winCombos.length; i++){
+      if (winCombos[i].every((piece) => gameState.xPieces.indexOf(piece) > -1)) {
+        gameState.newPiece = 'O';
+        gameState.xWins += 1;
+        winBox.innerHTML = `X wins!`;
+        xWinCount.innerHTML = gameState.xWins;
+      }
+      if (winCombos[i].every(piece => gameState.oPieces.indexOf(piece) > -1)) {
+        gameState.newPiece = 'X'
+        gameState.oWins += 1;
+        winBox.innerHTML = `O wins!`;
+        oWinCount.innerHTML = gameState.oWins;
+      }
     }
   }
   if (gameState.xPieces.length + gameState.oPieces.length == 9 && winBox.innerHTML === '') {
