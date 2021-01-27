@@ -1,3 +1,5 @@
+import Column from './Column.jsx';
+
 class Board extends React.Component {
   constructor(props) {
     super(props);
@@ -90,106 +92,57 @@ class Board extends React.Component {
     let color = this.state.color
     let freeSpace = null;
     var allPieces = [];
-    for(var i = 1; i<=6; i++) {
-      if (column.getElementsByClassName(`space ${i}`).length > 0){
-        freeSpace = column.getElementsByClassName(`space ${i}`)[0];
-        break;
+
+    if (column !== null) {
+      for(var i = 1; i<=6; i++) {
+        if (column.getElementsByClassName(`space ${i}`).length > 0){
+          freeSpace = column.getElementsByClassName(`space ${i}`)[0];
+          break;
+        }
       }
-    }
-    if(freeSpace !== null && this.state.disabled == false) {
-      var spaceLoc = parseInt(`${freeSpace.dataset['x']}${freeSpace.dataset['y']}`);
-      this.setState({
-        counter: this.state.counter + 1
-      });
-      freeSpace.classList.add(color);
-      freeSpace.classList.remove("space");
-      if (color === "yellowSpace") {
-        allPieces = this.state.yellow.concat([spaceLoc])
+      if(freeSpace !== null && this.state.disabled == false) {
+        var spaceLoc = parseInt(`${freeSpace.dataset['x']}${freeSpace.dataset['y']}`);
         this.setState({
-          yellow: allPieces
+          counter: this.state.counter + 1
         });
-        this.setState({
-          color: "redSpace"
-        });
-      } else {
-        allPieces = this.state.red.concat([spaceLoc]);
-        this.setState({
-          red: allPieces
-        })
-        this.setState({
-          color: "yellowSpace"
-        })
+        freeSpace.classList.add(color);
+        freeSpace.classList.remove("space");
+        if (color === "yellowSpace") {
+          allPieces = this.state.yellow.concat([spaceLoc])
+          this.setState({
+            yellow: allPieces
+          });
+          this.setState({
+            color: "redSpace"
+          });
+        } else {
+          allPieces = this.state.red.concat([spaceLoc]);
+          this.setState({
+            red: allPieces
+          })
+          this.setState({
+            color: "yellowSpace"
+          })
+        }
       }
+      allPieces.sort((a,b) => { return a-b;})
+      this.winTester(allPieces, color);
     }
-    allPieces.sort((a,b) => { return a-b;})
-    this.winTester(allPieces, color);
   }
 
-
-
-
-
   render () {
+    let rowArray = ["1", "2", "3", "4", "5", "6"];
     return (
       <div>
         <h1 id="title">Connect 4</h1>
         <div id="board">
-          <div id="col1" onClick={this.handleClick} disabled = {this.state.disabled}>
-            <div data-x="1" data-y="6" className="space 6"></div>
-            <div data-x="1" data-y="5" className="space 5"></div>
-            <div data-x="1" data-y="4" className="space 4"></div>
-            <div data-x="1" data-y="3" className="space 3"></div>
-            <div data-x="1" data-y="2" className="space 2"></div>
-            <div data-x="1" data-y="1" className="space 1"></div>
-          </div>
-          <div id="col2" onClick={this.handleClick}>
-            <div data-x="2" data-y="6" className="space 6"></div>
-            <div data-x="2" data-y="5" className="space 5"></div>
-            <div data-x="2" data-y="4" className="space 4"></div>
-            <div data-x="2" data-y="3" className="space 3"></div>
-            <div data-x="2" data-y="2" className="space 2"></div>
-            <div data-x="2" data-y="1" className="space 1"></div>
-          </div>
-          <div id="col3" onClick={this.handleClick}>
-            <div data-x="3" data-y="6" className="space 6"></div>
-            <div data-x="3" data-y="5" className="space 5"></div>
-            <div data-x="3" data-y="4" className="space 4"></div>
-            <div data-x="3" data-y="3" className="space 3"></div>
-            <div data-x="3" data-y="2" className="space 2"></div>
-            <div data-x="3" data-y="1" className="space 1"></div>
-          </div>
-          <div id="col4" onClick={this.handleClick}>
-            <div data-x="4" data-y="6" className="space 6"></div>
-            <div data-x="4" data-y="5" className="space 5"></div>
-            <div data-x="4" data-y="4" className="space 4"></div>
-            <div data-x="4" data-y="3" className="space 3"></div>
-            <div data-x="4" data-y="2" className="space 2"></div>
-            <div data-x="4" data-y="1" className="space 1"></div>
-          </div>
-          <div id="col5" onClick={this.handleClick}>
-            <div data-x="5" data-y="6" className="space 6"></div>
-            <div data-x="5" data-y="5" className="space 5"></div>
-            <div data-x="5" data-y="4" className="space 4"></div>
-            <div data-x="5" data-y="3" className="space 3"></div>
-            <div data-x="5" data-y="2" className="space 2"></div>
-            <div data-x="5" data-y="1" className="space 1"></div>
-          </div>
-          <div id="col6" onClick={this.handleClick}>
-            <div data-x="6" data-y="6" className="space 6"></div>
-            <div data-x="6" data-y="5" className="space 5"></div>
-            <div data-x="6" data-y="4" className="space 4"></div>
-            <div data-x="6" data-y="3" className="space 3"></div>
-            <div data-x="6" data-y="2" className="space 2"></div>
-            <div data-x="6" data-y="1" className="space 1"></div>
-          </div>
-          <div id="col7" onClick={this.handleClick}>
-            <div data-x="7" data-y="6" className="space 6"></div>
-            <div data-x="7" data-y="5" className="space 5"></div>
-            <div data-x="7" data-y="4" className="space 4"></div>
-            <div data-x="7" data-y="3" className="space 3"></div>
-            <div data-x="7" data-y="2" className="space 2"></div>
-            <div data-x="7" data-y="1" className="space 1"></div>
-          </div>
+          <Column x="1" y={rowArray} handleClick={this.handleClick} disabled={this.state.disabled} />
+          <Column x="2" y={rowArray} handleClick={this.handleClick} disabled={this.state.disabled} />
+          <Column x="3" y={rowArray} handleClick={this.handleClick} disabled={this.state.disabled} />
+          <Column x="4" y={rowArray} handleClick={this.handleClick} disabled={this.state.disabled} />
+          <Column x="5" y={rowArray} handleClick={this.handleClick} disabled={this.state.disabled} />
+          <Column x="6" y={rowArray} handleClick={this.handleClick} disabled={this.state.disabled} />
+          <Column x="7" y={rowArray} handleClick={this.handleClick} disabled={this.state.disabled} />
         </div>
         <h1 id="winner">{this.state.win}</h1>
       </div>
